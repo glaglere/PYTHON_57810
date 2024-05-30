@@ -23,18 +23,19 @@ class Compra:
             ["Cliente ID:", self.cliente_id]
         ]
 
-        # Crear tabla de productos
-        productos = [[item.producto.nombre, item.cantidad, f"${item.producto.precio * item.cantidad:.2f}"] for item in
-                     self.carrito.items]
+        # Crear tabla de productos con columnas adicionales
+        productos = [[item.producto.nombre, item.cantidad, f"${item.producto.precio:.2f}",
+                      f"${item.producto.precio * item.cantidad:.2f}"] for item in self.carrito.items]
 
-        # Añadir fila de total
-        total = [["Total a pagar", "", f"${self.carrito.total():.2f}"]]
+        # Calcular total general
+        total_general = self.carrito.total()
 
         # Formatear las tablas usando tabulate
         recibo = tabulate(cabecera, tablefmt="plain")
         recibo += "\n" + "-" * 40
-        recibo += "\n" + tabulate(productos, headers=["Producto", "Cantidad", "Precio"], tablefmt="plain")
+        recibo += "\n" + tabulate(productos, headers=["Producto", "Cantidad", "Precio Unitario", "Total"],
+                                  tablefmt="plain")
         recibo += "\n" + "-" * 40
-        recibo += "\n" + tabulate(total, tablefmt="plain")
+        recibo += f"\n{'Total a pagar':<30} ${total_general:.2f}"
 
         return recibo

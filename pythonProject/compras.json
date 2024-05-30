@@ -137,5 +137,99 @@
             ]
         },
         "fecha": "2024-05-30 14:22:05"
+    },
+    {
+        "cliente_id": 1,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Smartphone",
+                        "precio": 600.0
+                    },
+                    "cantidad": 1
+                },
+                {
+                    "producto": {
+                        "nombre": "Tablet",
+                        "precio": 300.0
+                    },
+                    "cantidad": 2
+                },
+                {
+                    "producto": {
+                        "nombre": "Auriculares",
+                        "precio": 150.0
+                    },
+                    "cantidad": 3
+                },
+                {
+                    "producto": {
+                        "nombre": "Cámara",
+                        "precio": 450.0
+                    },
+                    "cantidad": 1
+                }
+            ]
+        },
+        "fecha": "2024-05-30 14:24:32"
+    },
+    {
+        "cliente_id": 3,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Tablet",
+                        "precio": 300.0
+                    },
+                    "cantidad": 4
+                },
+                {
+                    "producto": {
+                        "nombre": "Smartphone",
+                        "precio": 600.0
+                    },
+                    "cantidad": 3
+                },
+                {
+                    "producto": {
+                        "nombre": "Monitor",
+                        "precio": 250.0
+                    },
+                    "cantidad": 8
+                }
+            ]
+        },
+        "fecha": "2024-05-30 14:28:43"
+    },
+    {
+        "cliente_id": 4,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Auriculares",
+                        "precio": 150.0
+                    },
+                    "cantidad": 5
+                },
+                {
+                    "producto": {
+                        "nombre": "Cámara",
+                        "precio": 450.0
+                    },
+                    "cantidad": 6
+                },
+                {
+                    "producto": {
+                        "nombre": "Impresora",
+                        "precio": 200.0
+                    },
+                    "cantidad": 7
+                }
+            ]
+        },
+        "fecha": "2024-05-30 14:29:20"
     }
 ]
