@@ -38,9 +38,53 @@ class ClienteCorporativo(Cliente):
         return f"{super().__str__()}, Empresa: {self.empresa}, Descuento Corporativo: {self.descuento_corporativo}%"
 
 
+def main():
+    clientes = []
+
+    while True:
+        print("\n1. Agregar Cliente Regular")
+        print("\n2. Agregar Cliente VIP")
+        print("\n3. Agregar Cliente Corporativo")
+        print("\n4. Mostrar Clientes")
+        print("\n5. Salir")
+
+        opcion = input("\nSeleccione una opción: ")
+
+        if opcion == '1':
+            nombre = input("Nombre: ")
+            apellido = input("Apellido: ")
+            email = input("Email: ")
+            telefono = input("Teléfono: ")
+            frecuencia_compra = input("Frecuencia de Compra (veces por mes): ")
+            cliente = ClienteRegular(nombre, apellido, email, telefono, frecuencia_compra)
+            clientes.append(cliente)
+        elif opcion == '2':
+            nombre = input("Nombre: ")
+            apellido = input("Apellido: ")
+            email = input("Email: ")
+            telefono = input("Teléfono: ")
+            descuento = input("Descuento (%): ")
+            puntos = input("Puntos: ")
+            cliente = ClienteVIP(nombre, apellido, email, telefono, descuento, puntos)
+            clientes.append(cliente)
+        elif opcion == '3':
+            nombre = input("Nombre: ")
+            apellido = input("Apellido: ")
+            email = input("Email: ")
+            telefono = input("Teléfono: ")
+            empresa = input("Empresa: ")
+            descuento_corporativo = input("Descuento Corporativo (%): ")
+            cliente = ClienteCorporativo(nombre, apellido, email, telefono, empresa, descuento_corporativo)
+            clientes.append(cliente)
+        elif opcion == '4':
+            for cliente in clientes:
+                print(cliente)
+        elif opcion == '5':
+            break
+        else:
+            print("Opción no válida, por favor intente nuevamente.")
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    cliente1 = Cliente("Ginette", "Laglere", "glaglere@gmail.com", "099-123456")
-    print(cliente1)
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
