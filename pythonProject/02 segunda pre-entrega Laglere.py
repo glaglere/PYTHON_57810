@@ -17,21 +17,62 @@ class Producto:
     def __str__(self):
         return f"Producto: {self.nombre}, Precio: ${self.precio:.2f}"
 
-class Compra:
-    def __init__(self, producto, fecha):
+class ItemCarrito:
+    def __init__(self, producto, cantidad):
         self.producto = producto
-        self.fecha = fecha
+        self.cantidad = cantidad
 
     def to_dict(self):
-        return {"producto": self.producto.to_dict(), "fecha": self.fecha}
+        return {"producto": self.producto.to_dict(), "cantidad": self.cantidad}
 
     @staticmethod
     def from_dict(data):
         producto = Producto.from_dict(data["producto"])
-        return Compra(producto, data["fecha"])
+        return ItemCarrito(producto, data["cantidad"])
 
     def __str__(self):
-        return f"{self.producto.nombre} - ${self.producto.precio:.2f} (Fecha: {self.fecha})"
+        return f"{self.producto.nombre} - ${self.producto.precio:.2f} x {self.cantidad}"
+
+class Carrito:
+    def __init__(self):
+        self.items = []
+
+    def agregar_item(self, producto, cantidad):
+        self.items.append(ItemCarrito(producto, cantidad))
+
+    def vaciar_carrito(self):
+        self.items = []
+
+    def total(self):
+        return sum(item.producto.precio * item.cantidad for item in self.items)
+
+    def to_dict(self):
+        return {"items": [item.to_dict() for item in self.items]}
+
+    @staticmethod
+    def from_dict(data):
+        carrito = Carrito()
+        carrito.items = [ItemCarrito.from_dict(item) for item in data["items"]]
+        return carrito
+
+    def __str__(self):
+        return "\n".join(str(item) for item in self.items)
+
+class Compra:
+    def __init__(self, carrito, fecha):
+        self.carrito = carrito
+        self.fecha = fecha
+
+    def to_dict(self):
+        return {"carrito": self.carrito.to_dict(), "fecha": self.fecha}
+
+    @staticmethod
+    def from_dict(data):
+        carrito = Carrito.from_dict(data["carrito"])
+        return Compra(carrito, data["fecha"])
+
+    def __str__(self):
+        return f"{self.carrito}\nTotal: ${self.carrito.total():.2f} (Fecha: {self.fecha})"
 
 class Cliente:
     def __init__(self, nombre, apellido, email, telefono):
@@ -41,9 +82,9 @@ class Cliente:
         self.telefono = telefono
         self.compras = []
 
-    def registrar_compra(self, producto):
+    def registrar_compra(self, carrito):
         fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        compra = Compra(producto, fecha)
+        compra = Compra(carrito, fecha)
         self.compras.append(compra)
 
     def to_dict(self):
@@ -195,6 +236,18 @@ def mostrar_productos(productos):
     table = [[i + 1, producto.nombre, f"${producto.precio:.2f}"] for i, producto in enumerate(productos)]
     print(tabulate(table, headers, tablefmt="grid"))
 
+def agregar_al_carrito(productos, carrito):
+    print("\nSeleccione un Producto")
+    mostrar_productos(productos)
+    indice_producto = int(input("Ingrese el número del producto: ")) - 1
+    if indice_producto < 0 or indice_producto >= len(productos):
+        print("Índice de producto no válido.")
+        return
+    producto = productos[indice_producto]
+    cantidad = int(input("Ingrese la cantidad: "))
+    carrito.agregar_item(producto, cantidad)
+    print(f"{producto.nombre} agregado al carrito.")
+
 def registrar_compra(clientes, productos):
     if not clientes:
         print("No hay clientes registrados.")
@@ -211,16 +264,15 @@ def registrar_compra(clientes, productos):
         return
     cliente = clientes[indice_cliente]
 
-    print("\nSeleccione un Producto")
-    mostrar_productos(productos)
-    indice_producto = int(input("Ingrese el número del producto: ")) - 1
-    if indice_producto < 0 or indice_producto >= len(productos):
-        print("Índice de producto no válido.")
-        return
-    producto = productos[indice_producto]
+    carrito = Carrito()
+    while True:
+        agregar_al_carrito(productos, carrito)
+        continuar = input("¿Desea agregar otro producto? (s/n): ").lower()
+        if continuar != 's':
+            break
 
-    cliente.registrar_compra(producto)
-    print(f"Compra registrada: {cliente.nombre} ha comprado {producto.nombre}")
+    cliente.registrar_compra(carrito)
+    print(f"Compra registrada para {cliente.nombre}.")
     guardar_clientes(clientes)
 
 def mostrar_compras(clientes):
@@ -236,8 +288,8 @@ def mostrar_compras(clientes):
         return
     cliente = clientes[indice_cliente]
 
-    headers = ["Nombre del Producto", "Precio", "Fecha"]
-    table = [[compra.producto.nombre, f"${compra.producto.precio:.2f}", compra.fecha] for compra in cliente.compras]
+    headers = ["Carrito", "Fecha"]
+    table = [[compra.carrito, compra.fecha] for compra in cliente.compras]
     print(f"Compras de {cliente.nombre}:")
     print(tabulate(table, headers, tablefmt="grid"))
 
