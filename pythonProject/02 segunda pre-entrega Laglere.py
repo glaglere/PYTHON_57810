@@ -144,15 +144,29 @@ def mostrar_compras(clientes):
         print("Cliente no encontrado.")
 
 
+def mostrar_menu(menu):
+    headers = ["Opción", "Descripción"]
+    table = [[key, value] for key, value in menu.items()]
+    print(tabulate(table, headers, tablefmt="grid"))
+
+
 def main():
     clientes = []
     productos = []
 
+    menu = {
+        "1": "Agregar Cliente",
+        "2": "Mostrar Clientes",
+        "3": "Agregar Producto",
+        "4": "Mostrar Productos",
+        "5": "Registrar Compra",
+        "6": "Mostrar Compras de Cliente",
+        "7": "Salir"
+    }
+
     while True:
         print("\nMenú Principal")
-        print(tabulate(
-            [["1. Agregar Cliente"], ["2. Mostrar Clientes"], ["3. Agregar Producto"], ["4. Mostrar Productos"],
-             ["5. Registrar Compra"], ["6. Mostrar Compras de Cliente"], ["7. Salir"]], tablefmt="grid"))
+        mostrar_menu(menu)
 
         opcion = input("\nSeleccione una opción: ")
 
