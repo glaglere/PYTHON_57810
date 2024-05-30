@@ -38,40 +38,40 @@ class ClienteCorporativo(Cliente):
         return f"{super().__str__()}, Empresa: {self.empresa}, Descuento Corporativo: {self.descuento_corporativo}%"
 
 
+# Función auxiliar para recolectar datos comunes
+def obtener_datos_comunes():
+    nombre = input("Nombre: ")
+    apellido = input("Apellido: ")
+    email = input("Email: ")
+    telefono = input("Teléfono: ")
+    return nombre, apellido, email, telefono
+
+
 def main():
     clientes = []
 
     while True:
         print("\n1. Agregar Cliente Regular")
-        print("\n2. Agregar Cliente VIP")
-        print("\n3. Agregar Cliente Corporativo")
-        print("\n4. Mostrar Clientes")
-        print("\n5. Salir")
+        print("2. Agregar Cliente VIP")
+        print("3. Agregar Cliente Corporativo")
+        print("4. Mostrar Clientes")
+        print("5. Salir")
 
         opcion = input("\nSeleccione una opción: ")
 
         if opcion == '1':
-            nombre = input("Nombre: ")
-            apellido = input("Apellido: ")
-            email = input("Email: ")
-            telefono = input("Teléfono: ")
+            nombre, apellido, email, telefono = obtener_datos_comunes()
             frecuencia_compra = input("Frecuencia de Compra (veces por mes): ")
             cliente = ClienteRegular(nombre, apellido, email, telefono, frecuencia_compra)
             clientes.append(cliente)
         elif opcion == '2':
-            nombre = input("Nombre: ")
-            apellido = input("Apellido: ")
-            email = input("Email: ")
-            telefono = input("Teléfono: ")
+            nombre, apellido, email, telefono = obtener_datos_comunes()
             descuento = input("Descuento (%): ")
             puntos = input("Puntos: ")
             cliente = ClienteVIP(nombre, apellido, email, telefono, descuento, puntos)
             clientes.append(cliente)
         elif opcion == '3':
-            nombre = input("Nombre: ")
-            apellido = input("Apellido: ")
-            email = input("Email: ")
-            telefono = input("Teléfono: ")
+            nombre, apellido, email, telefono = obtener_datos_comunes()
             empresa = input("Empresa: ")
             descuento_corporativo = input("Descuento Corporativo (%): ")
             cliente = ClienteCorporativo(nombre, apellido, email, telefono, empresa, descuento_corporativo)
@@ -85,6 +85,5 @@ def main():
             print("Opción no válida, por favor intente nuevamente.")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
