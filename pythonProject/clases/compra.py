@@ -1,4 +1,6 @@
+from tabulate import tabulate
 from .carrito import Carrito
+
 
 class Compra:
     def __init__(self, cliente_id, carrito, fecha):
@@ -15,14 +17,24 @@ class Compra:
         return Compra(data["cliente_id"], carrito, data["fecha"])
 
     def __str__(self):
-        recibo = []
-        recibo.append(f"Fecha: {self.fecha}")
-        recibo.append(f"Cliente ID: {self.cliente_id}")
-        recibo.append("-" * 40)
-        recibo.append("{:<20} {:<10} {:<10}".format("Producto", "Cantidad", "Precio"))
-        recibo.append("-" * 40)
-        for item in self.carrito.items:
-            recibo.append("{:<20} {:<10} ${:<10.2f}".format(item.producto.nombre, item.cantidad, item.producto.precio * item.cantidad))
-        recibo.append("-" * 40)
-        recibo.append("{:<20} {:<10} ${:<10.2f}".format("Total a pagar", "", self.carrito.total()))
-        return "\n".join(recibo)
+        # Datos de la cabecera del recibo
+        cabecera = [
+            ["Fecha:", self.fecha],
+            ["Cliente ID:", self.cliente_id]
+        ]
+
+        # Crear tabla de productos
+        productos = [[item.producto.nombre, item.cantidad, f"${item.producto.precio * item.cantidad:.2f}"] for item in
+                     self.carrito.items]
+
+        # Añadir fila de total
+        total = [["Total a pagar", "", f"${self.carrito.total():.2f}"]]
+
+        # Formatear las tablas usando tabulate
+        recibo = tabulate(cabecera, tablefmt="plain")
+        recibo += "\n" + "-" * 40
+        recibo += "\n" + tabulate(productos, headers=["Producto", "Cantidad", "Precio"], tablefmt="plain")
+        recibo += "\n" + "-" * 40
+        recibo += "\n" + tabulate(total, tablefmt="plain")
+
+        return recibo

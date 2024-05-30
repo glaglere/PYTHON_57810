@@ -115,5 +115,27 @@
             ]
         },
         "fecha": "2024-05-30 14:09:21"
+    },
+    {
+        "cliente_id": 0,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Auriculares",
+                        "precio": 150.0
+                    },
+                    "cantidad": 55
+                },
+                {
+                    "producto": {
+                        "nombre": "Auriculares",
+                        "precio": 150.0
+                    },
+                    "cantidad": 5
+                }
+            ]
+        },
+        "fecha": "2024-05-30 14:22:05"
     }
 ]
