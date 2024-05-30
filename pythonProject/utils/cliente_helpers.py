@@ -24,9 +24,7 @@ def agregar_cliente(clientes):
 
     nombre, apellido, email, telefono = obtener_datos_comunes()
     username = input("Nombre de usuario: ")
-    print(f"Tengo el username {username}")
     password = input("Contraseña: ")
-    print("Tengo password")
     confirmar_password = input("Confirmar contraseña: ")
 
     if password != confirmar_password:

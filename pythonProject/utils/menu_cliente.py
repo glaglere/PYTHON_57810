@@ -26,9 +26,9 @@ def menu_cliente(clientes, productos):
 
         if cliente_actual:
             if opcion == '1':
-                registrar_compra(cliente_actual, productos)
+                registrar_compra(clientes, productos)  # Ensure to pass the list of clients
             elif opcion == '2':
-                mostrar_compras(cliente_actual)
+                mostrar_compras(cliente_actual)  # Here, it can pass the actual client
             elif opcion == '3':
                 cliente_actual = None
                 print("Sesión cerrada. Volviendo al menú anterior...")

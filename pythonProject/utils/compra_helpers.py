@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from tabulate import tabulate
 
 from clases.carrito import Carrito
@@ -64,27 +63,13 @@ def registrar_compra(clientes, productos):
     else:
         print("Carrito vacío. No se registró ninguna compra.")
 
-def mostrar_compras(clientes):
+def mostrar_compras(cliente):
     compras = cargar_compras()
-    if not clientes:
-        print("No hay clientes registrados.")
-        return
     if not compras:
         print("No hay compras registradas.")
         return
 
-    print("\nSeleccione un Cliente")
-    mostrar_clientes(clientes)
-    try:
-        indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
-        if indice_cliente < 0 or indice_cliente >= len(clientes):
-            raise IndexError
-    except (ValueError, IndexError):
-        print("Índice de cliente no válido.")
-        return
-    cliente = clientes[indice_cliente]
-
     headers = ["Carrito", "Fecha"]
-    table = [[compra.carrito, compra.fecha] for compra in compras if compra.cliente_id == indice_cliente]
+    table = [[compra.carrito, compra.fecha] for compra in compras if compra.cliente_id == cliente]
     print(f"Compras de {cliente.nombre}:")
     print(tabulate(table, headers, tablefmt="grid"))

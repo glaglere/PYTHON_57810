@@ -5,7 +5,17 @@
         "email": "glaglere",
         "telefono": "099",
         "username": "glaglere",
-        "password": "$2b$12$I4n0654c19V8QK194VMSieLydhH/2ekFgspDpqYLunsJsdQlCWfam",
+        "password": "$2b$12$90guYRUFRKu8WzCuNt/wI./iz27MVO.BZhbQDkyy2RLgti0xGocvO",
+        "tipo": "ClienteRegular",
+        "frecuencia_compra": "2"
+    },
+    {
+        "nombre": "Ginette",
+        "apellido": "Laglere",
+        "email": "glaglere",
+        "telefono": "099",
+        "username": "glaglere",
+        "password": "$2b$12$uoXQrsBVyst02H.GyB4QzesL6IYB8RIuA5AgeLm5J6mMGN4X3kyUi",
         "tipo": "ClienteRegular",
         "frecuencia_compra": "2"
     }
