@@ -1,9 +1,22 @@
+class Producto:
+    def __init__(self, nombre, precio):
+        self.nombre = nombre
+        self.precio = precio
+
+    def __str__(self):
+        return f"Producto: {self.nombre}, Precio: ${self.precio:.2f}"
+
+
 class Cliente:
     def __init__(self, nombre, apellido, email, telefono):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
         self.telefono = telefono
+        self.compras = []
+
+    def registrar_compra(self, producto):
+        self.compras.append(producto)
 
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
@@ -49,13 +62,18 @@ def obtener_datos_comunes():
 
 def main():
     clientes = []
+    productos = []
 
     while True:
         print("\n1. Agregar Cliente Regular")
         print("2. Agregar Cliente VIP")
         print("3. Agregar Cliente Corporativo")
         print("4. Mostrar Clientes")
-        print("5. Salir")
+        print("5. Agregar Producto")
+        print("6. Mostrar Productos")
+        print("7. Registrar Compra")
+        print("8. Mostrar Compras de Cliente")
+        print("9. Salir")
 
         opcion = input("\nSeleccione una opción: ")
 
@@ -80,6 +98,33 @@ def main():
             for cliente in clientes:
                 print(cliente)
         elif opcion == '5':
+            nombre_producto = input("Nombre del Producto: ")
+            precio_producto = float(input("Precio del Producto: "))
+            producto = Producto(nombre_producto, precio_producto)
+            productos.append(producto)
+        elif opcion == '6':
+            for producto in productos:
+                print(producto)
+        elif opcion == '7':
+            email_cliente = input("Email del Cliente: ")
+            nombre_producto = input("Nombre del Producto: ")
+            cliente = next((c for c in clientes if c.email == email_cliente), None)
+            producto = next((p for p in productos if p.nombre == nombre_producto), None)
+            if cliente and producto:
+                cliente.registrar_compra(producto)
+                print(f"Compra registrada: {cliente.nombre} ha comprado {producto.nombre}")
+            else:
+                print("Cliente o producto no encontrado.")
+        elif opcion == '8':
+            email_cliente = input("Email del Cliente: ")
+            cliente = next((c for c in clientes if c.email == email_cliente), None)
+            if cliente:
+                print(f"Compras de {cliente.nombre}:")
+                for compra in cliente.compras:
+                    print(compra)
+            else:
+                print("Cliente no encontrado.")
+        elif opcion == '9':
             break
         else:
             print("Opción no válida, por favor intente nuevamente.")
