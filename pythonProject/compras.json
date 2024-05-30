@@ -86,5 +86,34 @@
             ]
         },
         "fecha": "2024-05-30 12:55:52"
+    },
+    {
+        "cliente_id": 0,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Televisor",
+                        "precio": 1000.0
+                    },
+                    "cantidad": 12
+                },
+                {
+                    "producto": {
+                        "nombre": "Laptop",
+                        "precio": 850.0
+                    },
+                    "cantidad": 3
+                },
+                {
+                    "producto": {
+                        "nombre": "Smartphone",
+                        "precio": 600.0
+                    },
+                    "cantidad": 4
+                }
+            ]
+        },
+        "fecha": "2024-05-30 14:09:21"
     }
 ]

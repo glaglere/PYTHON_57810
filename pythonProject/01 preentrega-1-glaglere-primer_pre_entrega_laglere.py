@@ -8,8 +8,8 @@ Original file is located at
 """
 
 # Instalar bcrypt y tabulate
-!pip install bcrypt
-!pip install tabulate
+# !pip install bcrypt
+# !pip install tabulate
 
 import bcrypt
 from tabulate import tabulate
