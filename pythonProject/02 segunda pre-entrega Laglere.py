@@ -1,6 +1,7 @@
 from tabulate import tabulate
 from datetime import datetime
 
+
 class Producto:
     def __init__(self, nombre, precio):
         self.nombre = nombre
@@ -9,6 +10,7 @@ class Producto:
     def __str__(self):
         return f"Producto: {self.nombre}, Precio: ${self.precio:.2f}"
 
+
 class Compra:
     def __init__(self, producto, fecha):
         self.producto = producto
@@ -16,6 +18,7 @@ class Compra:
 
     def __str__(self):
         return f"{self.producto.nombre} - ${self.producto.precio:.2f} (Fecha: {self.fecha})"
+
 
 class Cliente:
     def __init__(self, nombre, apellido, email, telefono):
@@ -33,6 +36,7 @@ class Cliente:
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
 
+
 class ClienteRegular(Cliente):
     def __init__(self, nombre, apellido, email, telefono, frecuencia_compra):
         super().__init__(nombre, apellido, email, telefono)
@@ -40,6 +44,7 @@ class ClienteRegular(Cliente):
 
     def __str__(self):
         return f"{super().__str__()}, Frecuencia de Compra: {self.frecuencia_compra} veces por mes"
+
 
 class ClienteVIP(Cliente):
     def __init__(self, nombre, apellido, email, telefono, descuento, puntos):
@@ -50,6 +55,7 @@ class ClienteVIP(Cliente):
     def __str__(self):
         return f"{super().__str__()}, Descuento: {self.descuento}%, Puntos: {self.puntos}"
 
+
 class ClienteCorporativo(Cliente):
     def __init__(self, nombre, apellido, email, telefono, empresa, descuento_corporativo):
         super().__init__(nombre, apellido, email, telefono)
@@ -59,6 +65,7 @@ class ClienteCorporativo(Cliente):
     def __str__(self):
         return f"{super().__str__()}, Empresa: {self.empresa}, Descuento Corporativo: {self.descuento_corporativo}%"
 
+
 # Función auxiliar para recolectar datos comunes
 def obtener_datos_comunes():
     nombre = input("Nombre: ")
@@ -66,6 +73,7 @@ def obtener_datos_comunes():
     email = input("Email: ")
     telefono = input("Teléfono: ")
     return nombre, apellido, email, telefono
+
 
 def agregar_cliente(clientes):
     tipo_cliente_menu = {
@@ -97,10 +105,11 @@ def agregar_cliente(clientes):
     clientes.append(cliente)
     print("Cliente agregado exitosamente.")
 
+
 def mostrar_clientes(clientes):
-    headers = ["Nombre", "Apellido", "Email", "Teléfono", "Detalles"]
+    headers = ["#", "Nombre", "Apellido", "Email", "Teléfono", "Detalles"]
     table = []
-    for cliente in clientes:
+    for i, cliente in enumerate(clientes):
         if isinstance(cliente, ClienteRegular):
             detalles = f"Frecuencia de Compra: {cliente.frecuencia_compra} veces por mes"
         elif isinstance(cliente, ClienteVIP):
@@ -109,8 +118,9 @@ def mostrar_clientes(clientes):
             detalles = f"Empresa: {cliente.empresa}, Descuento Corporativo: {cliente.descuento_corporativo}%"
         else:
             detalles = ""
-        table.append([cliente.nombre, cliente.apellido, cliente.email, cliente.telefono, detalles])
+        table.append([i + 1, cliente.nombre, cliente.apellido, cliente.email, cliente.telefono, detalles])
     print(tabulate(table, headers, tablefmt="grid"))
+
 
 def agregar_producto(productos):
     nombre_producto = input("Nombre del Producto: ")
@@ -119,37 +129,64 @@ def agregar_producto(productos):
     productos.append(producto)
     print("Producto agregado exitosamente.")
 
+
 def mostrar_productos(productos):
     headers = ["Nombre", "Precio"]
     table = [[producto.nombre, f"${producto.precio:.2f}"] for producto in productos]
     print(tabulate(table, headers, tablefmt="grid"))
 
+
 def registrar_compra(clientes, productos):
-    email_cliente = input("Email del Cliente: ")
+    if not clientes:
+        print("No hay clientes registrados.")
+        return
+    if not productos:
+        print("No hay productos registrados.")
+        return
+
+    print("\nSeleccione un Cliente")
+    mostrar_clientes(clientes)
+    indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
+    if indice_cliente < 0 or indice_cliente >= len(clientes):
+        print("Índice de cliente no válido.")
+        return
+    cliente = clientes[indice_cliente]
+
+    print("\nSeleccione un Producto")
+    mostrar_productos(productos)
     nombre_producto = input("Nombre del Producto: ")
-    cliente = next((c for c in clientes if c.email == email_cliente), None)
     producto = next((p for p in productos if p.nombre == nombre_producto), None)
-    if cliente and producto:
+    if producto:
         cliente.registrar_compra(producto)
         print(f"Compra registrada: {cliente.nombre} ha comprado {producto.nombre}")
     else:
-        print("Cliente o producto no encontrado.")
+        print("Producto no encontrado.")
+
 
 def mostrar_compras(clientes):
-    email_cliente = input("Email del Cliente: ")
-    cliente = next((c for c in clientes if c.email == email_cliente), None)
-    if cliente:
-        headers = ["Nombre del Producto", "Precio", "Fecha"]
-        table = [[compra.producto.nombre, f"${compra.producto.precio:.2f}", compra.fecha] for compra in cliente.compras]
-        print(f"Compras de {cliente.nombre}:")
-        print(tabulate(table, headers, tablefmt="grid"))
-    else:
-        print("Cliente no encontrado.")
+    if not clientes:
+        print("No hay clientes registrados.")
+        return
+
+    print("\nSeleccione un Cliente")
+    mostrar_clientes(clientes)
+    indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
+    if indice_cliente < 0 or indice_cliente >= len(clientes):
+        print("Índice de cliente no válido.")
+        return
+    cliente = clientes[indice_cliente]
+
+    headers = ["Nombre del Producto", "Precio", "Fecha"]
+    table = [[compra.producto.nombre, f"${compra.producto.precio:.2f}", compra.fecha] for compra in cliente.compras]
+    print(f"Compras de {cliente.nombre}:")
+    print(tabulate(table, headers, tablefmt="grid"))
+
 
 def mostrar_menu(menu):
     headers = ["Opción", "Descripción"]
     table = [[key, value] for key, value in menu.items()]
     print(tabulate(table, headers, tablefmt="grid"))
+
 
 def main():
     clientes = []
@@ -187,6 +224,7 @@ def main():
             break
         else:
             print("Opción no válida, por favor intente nuevamente.")
+
 
 if __name__ == "__main__":
     main()
