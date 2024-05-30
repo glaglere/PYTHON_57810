@@ -1,0 +1,90 @@
+[
+    {
+        "cliente_id": 0,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Televisor",
+                        "precio": 1000.0
+                    },
+                    "cantidad": 2
+                },
+                {
+                    "producto": {
+                        "nombre": "Laptop",
+                        "precio": 850.0
+                    },
+                    "cantidad": 3
+                },
+                {
+                    "producto": {
+                        "nombre": "Smartphone",
+                        "precio": 600.0
+                    },
+                    "cantidad": 4
+                }
+            ]
+        },
+        "fecha": "2024-05-30 12:51:44"
+    },
+    {
+        "cliente_id": 1,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Teclado",
+                        "precio": 50.0
+                    },
+                    "cantidad": 100
+                },
+                {
+                    "producto": {
+                        "nombre": "Ratón",
+                        "precio": 30.0
+                    },
+                    "cantidad": 101
+                }
+            ]
+        },
+        "fecha": "2024-05-30 12:55:01"
+    },
+    {
+        "cliente_id": 0,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Impresora",
+                        "precio": 200.0
+                    },
+                    "cantidad": 1
+                }
+            ]
+        },
+        "fecha": "2024-05-30 12:55:24"
+    },
+    {
+        "cliente_id": 0,
+        "carrito": {
+            "items": [
+                {
+                    "producto": {
+                        "nombre": "Tablet",
+                        "precio": 300.0
+                    },
+                    "cantidad": 4
+                },
+                {
+                    "producto": {
+                        "nombre": "Cámara",
+                        "precio": 450.0
+                    },
+                    "cantidad": 1
+                }
+            ]
+        },
+        "fecha": "2024-05-30 12:55:52"
+    }
+]

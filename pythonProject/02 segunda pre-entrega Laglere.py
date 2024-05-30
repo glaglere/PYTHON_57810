@@ -2,6 +2,7 @@ import json
 from tabulate import tabulate
 from datetime import datetime
 
+
 class Producto:
     def __init__(self, nombre, precio):
         self.nombre = nombre
@@ -16,6 +17,7 @@ class Producto:
 
     def __str__(self):
         return f"Producto: {self.nombre}, Precio: ${self.precio:.2f}"
+
 
 class ItemCarrito:
     def __init__(self, producto, cantidad):
@@ -32,6 +34,7 @@ class ItemCarrito:
 
     def __str__(self):
         return f"{self.producto.nombre} - ${self.producto.precio:.2f} x {self.cantidad}"
+
 
 class Carrito:
     def __init__(self):
@@ -58,21 +61,24 @@ class Carrito:
     def __str__(self):
         return "\n".join(str(item) for item in self.items)
 
+
 class Compra:
-    def __init__(self, carrito, fecha):
+    def __init__(self, cliente_id, carrito, fecha):
+        self.cliente_id = cliente_id
         self.carrito = carrito
         self.fecha = fecha
 
     def to_dict(self):
-        return {"carrito": self.carrito.to_dict(), "fecha": self.fecha}
+        return {"cliente_id": self.cliente_id, "carrito": self.carrito.to_dict(), "fecha": self.fecha}
 
     @staticmethod
     def from_dict(data):
         carrito = Carrito.from_dict(data["carrito"])
-        return Compra(carrito, data["fecha"])
+        return Compra(data["cliente_id"], carrito, data["fecha"])
 
     def __str__(self):
-        return f"{self.carrito}\nTotal: ${self.carrito.total():.2f} (Fecha: {self.fecha})"
+        return f"Cliente ID: {self.cliente_id}\n{self.carrito}\nTotal: ${self.carrito.total():.2f} (Fecha: {self.fecha})"
+
 
 class Cliente:
     def __init__(self, nombre, apellido, email, telefono):
@@ -80,30 +86,22 @@ class Cliente:
         self.apellido = apellido
         self.email = email
         self.telefono = telefono
-        self.compras = []
-
-    def registrar_compra(self, carrito):
-        fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        compra = Compra(carrito, fecha)
-        self.compras.append(compra)
 
     def to_dict(self):
         return {
             "nombre": self.nombre,
             "apellido": self.apellido,
             "email": self.email,
-            "telefono": self.telefono,
-            "compras": [compra.to_dict() for compra in self.compras]
+            "telefono": self.telefono
         }
 
     @staticmethod
     def from_dict(data):
-        cliente = Cliente(data["nombre"], data["apellido"], data["email"], data["telefono"])
-        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
-        return cliente
+        return Cliente(data["nombre"], data["apellido"], data["email"], data["telefono"])
 
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
+
 
 class ClienteRegular(Cliente):
     def __init__(self, nombre, apellido, email, telefono, frecuencia_compra):
@@ -118,12 +116,12 @@ class ClienteRegular(Cliente):
 
     @staticmethod
     def from_dict(data):
-        cliente = ClienteRegular(data["nombre"], data["apellido"], data["email"], data["telefono"], data["frecuencia_compra"])
-        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
-        return cliente
+        return ClienteRegular(data["nombre"], data["apellido"], data["email"], data["telefono"],
+                              data["frecuencia_compra"])
 
     def __str__(self):
         return f"{super().__str__()}, Frecuencia de Compra: {self.frecuencia_compra} veces por mes"
+
 
 class ClienteVIP(Cliente):
     def __init__(self, nombre, apellido, email, telefono, descuento, puntos):
@@ -140,12 +138,12 @@ class ClienteVIP(Cliente):
 
     @staticmethod
     def from_dict(data):
-        cliente = ClienteVIP(data["nombre"], data["apellido"], data["email"], data["telefono"], data["descuento"], data["puntos"])
-        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
-        return cliente
+        return ClienteVIP(data["nombre"], data["apellido"], data["email"], data["telefono"], data["descuento"],
+                          data["puntos"])
 
     def __str__(self):
         return f"{super().__str__()}, Descuento: {self.descuento}%, Puntos: {self.puntos}"
+
 
 class ClienteCorporativo(Cliente):
     def __init__(self, nombre, apellido, email, telefono, empresa, descuento_corporativo):
@@ -162,12 +160,12 @@ class ClienteCorporativo(Cliente):
 
     @staticmethod
     def from_dict(data):
-        cliente = ClienteCorporativo(data["nombre"], data["apellido"], data["email"], data["telefono"], data["empresa"], data["descuento_corporativo"])
-        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
-        return cliente
+        return ClienteCorporativo(data["nombre"], data["apellido"], data["email"], data["telefono"], data["empresa"],
+                                  data["descuento_corporativo"])
 
     def __str__(self):
         return f"{super().__str__()}, Empresa: {self.empresa}, Descuento Corporativo: {self.descuento_corporativo}%"
+
 
 # Función auxiliar para recolectar datos comunes
 def obtener_datos_comunes():
@@ -176,6 +174,7 @@ def obtener_datos_comunes():
     email = input("Email: ")
     telefono = input("Teléfono: ")
     return nombre, apellido, email, telefono
+
 
 def agregar_cliente(clientes):
     tipo_cliente_menu = {
@@ -208,6 +207,7 @@ def agregar_cliente(clientes):
     print("Cliente agregado exitosamente.")
     guardar_clientes(clientes)
 
+
 def mostrar_clientes(clientes):
     headers = ["#", "Nombre", "Apellido", "Email", "Teléfono", "Detalles"]
     table = []
@@ -223,30 +223,47 @@ def mostrar_clientes(clientes):
         table.append([i + 1, cliente.nombre, cliente.apellido, cliente.email, cliente.telefono, detalles])
     print(tabulate(table, headers, tablefmt="grid"))
 
+
 def agregar_producto(productos):
     nombre_producto = input("Nombre del Producto: ")
-    precio_producto = float(input("Precio del Producto: "))
+    try:
+        precio_producto = float(input("Precio del Producto: "))
+    except ValueError:
+        print("Precio inválido. Intente nuevamente.")
+        return
     producto = Producto(nombre_producto, precio_producto)
     productos.append(producto)
     print("Producto agregado exitosamente.")
     guardar_productos(productos)
+
 
 def mostrar_productos(productos):
     headers = ["#", "Nombre", "Precio"]
     table = [[i + 1, producto.nombre, f"${producto.precio:.2f}"] for i, producto in enumerate(productos)]
     print(tabulate(table, headers, tablefmt="grid"))
 
+
 def agregar_al_carrito(productos, carrito):
     print("\nSeleccione un Producto")
     mostrar_productos(productos)
-    indice_producto = int(input("Ingrese el número del producto: ")) - 1
-    if indice_producto < 0 or indice_producto >= len(productos):
+    try:
+        indice_producto = int(input("Ingrese el número del producto: ")) - 1
+        if indice_producto < 0 or indice_producto >= len(productos):
+            raise IndexError
+    except (ValueError, IndexError):
         print("Índice de producto no válido.")
         return
     producto = productos[indice_producto]
-    cantidad = int(input("Ingrese la cantidad: "))
+    try:
+        cantidad = int(input("Ingrese la cantidad: "))
+        if cantidad <= 0:
+            raise ValueError
+    except ValueError:
+        print("Cantidad inválida. Intente nuevamente.")
+        return
     carrito.agregar_item(producto, cantidad)
     print(f"{producto.nombre} agregado al carrito.")
+
 
 def registrar_compra(clientes, productos):
     if not clientes:
@@ -258,8 +275,11 @@ def registrar_compra(clientes, productos):
 
     print("\nSeleccione un Cliente")
     mostrar_clientes(clientes)
-    indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
-    if indice_cliente < 0 or indice_cliente >= len(clientes):
+    try:
+        indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
+        if indice_cliente < 0 or indice_cliente >= len(clientes):
+            raise IndexError
+    except (ValueError, IndexError):
         print("Índice de cliente no válido.")
         return
     cliente = clientes[indice_cliente]
@@ -271,36 +291,50 @@ def registrar_compra(clientes, productos):
         if continuar != 's':
             break
 
-    cliente.registrar_compra(carrito)
-    print(f"Compra registrada para {cliente.nombre}.")
-    guardar_clientes(clientes)
+    if carrito.items:
+        compra = Compra(indice_cliente, carrito, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        guardar_compra(compra)
+        print(f"Compra registrada para {cliente.nombre}.")
+    else:
+        print("Carrito vacío. No se registró ninguna compra.")
+
 
 def mostrar_compras(clientes):
+    compras = cargar_compras()
     if not clientes:
         print("No hay clientes registrados.")
+        return
+    if not compras:
+        print("No hay compras registradas.")
         return
 
     print("\nSeleccione un Cliente")
     mostrar_clientes(clientes)
-    indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
-    if indice_cliente < 0 or indice_cliente >= len(clientes):
+    try:
+        indice_cliente = int(input("Ingrese el número del cliente: ")) - 1
+        if indice_cliente < 0 or indice_cliente >= len(clientes):
+            raise IndexError
+    except (ValueError, IndexError):
         print("Índice de cliente no válido.")
         return
     cliente = clientes[indice_cliente]
 
     headers = ["Carrito", "Fecha"]
-    table = [[compra.carrito, compra.fecha] for compra in cliente.compras]
+    table = [[compra.carrito, compra.fecha] for compra in compras if compra.cliente_id == indice_cliente]
     print(f"Compras de {cliente.nombre}:")
     print(tabulate(table, headers, tablefmt="grid"))
+
 
 def mostrar_menu(menu):
     headers = ["Opción", "Descripción"]
     table = [[key, value] for key, value in menu.items()]
     print(tabulate(table, headers, tablefmt="grid"))
 
+
 def guardar_clientes(clientes):
     with open('clientes.json', 'w', encoding='utf-8') as file:
         json.dump([cliente.to_dict() for cliente in clientes], file, indent=4, ensure_ascii=False)
+
 
 def cargar_clientes():
     try:
@@ -318,9 +352,11 @@ def cargar_clientes():
     except FileNotFoundError:
         return []
 
+
 def guardar_productos(productos):
     with open('productos.json', 'w', encoding='utf-8') as file:
         json.dump([producto.to_dict() for producto in productos], file, indent=4, ensure_ascii=False)
+
 
 def cargar_productos():
     try:
@@ -329,6 +365,26 @@ def cargar_productos():
             return [Producto.from_dict(data) for data in productos_data]
     except FileNotFoundError:
         return []
+
+
+def guardar_compra(compra):
+    try:
+        compras = cargar_compras()
+    except FileNotFoundError:
+        compras = []
+    compras.append(compra)
+    with open('compras.json', 'w', encoding='utf-8') as file:
+        json.dump([comp.to_dict() for comp in compras], file, indent=4, ensure_ascii=False)
+
+
+def cargar_compras():
+    try:
+        with open('compras.json', 'r', encoding='utf-8') as file:
+            compras_data = json.load(file)
+            return [Compra.from_dict(data) for data in compras_data]
+    except FileNotFoundError:
+        return []
+
 
 def main():
     clientes = cargar_clientes()
@@ -366,6 +422,7 @@ def main():
             break
         else:
             print("Opción no válida, por favor intente nuevamente.")
+
 
 if __name__ == "__main__":
     main()

@@ -4,30 +4,15 @@
         "apellido": "Perez",
         "email": "juan.perez@gmail.com",
         "telefono": "099.111.111",
-        "compras": [
-            {
-                "carrito": {
-                    "items": [
-                        {
-                            "producto": {
-                                "nombre": "Smartphone",
-                                "precio": 600.0
-                            },
-                            "cantidad": 10
-                        },
-                        {
-                            "producto": {
-                                "nombre": "Teclado",
-                                "precio": 50.0
-                            },
-                            "cantidad": 5
-                        }
-                    ]
-                },
-                "fecha": "2024-05-30 12:22:09"
-            }
-        ],
         "frecuencia_compra": "1",
+        "tipo": "ClienteRegular"
+    },
+    {
+    "nombre": "Jorge",
+        "apellido": "Sanchez",
+        "email": "jorge.sanchez@gmail.com",
+        "telefono": "099.123.123",
+        "frecuencia_compra": "2",
         "tipo": "ClienteRegular"
     }
 ]
