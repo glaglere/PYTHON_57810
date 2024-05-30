@@ -1,3 +1,6 @@
+from tabulate import tabulate
+
+
 class Producto:
     def __init__(self, nombre, precio):
         self.nombre = nombre
@@ -88,8 +91,19 @@ def agregar_cliente(clientes):
 
 
 def mostrar_clientes(clientes):
+    headers = ["Nombre", "Apellido", "Email", "Teléfono", "Detalles"]
+    table = []
     for cliente in clientes:
-        print(cliente)
+        if isinstance(cliente, ClienteRegular):
+            detalles = f"Frecuencia de Compra: {cliente.frecuencia_compra} veces por mes"
+        elif isinstance(cliente, ClienteVIP):
+            detalles = f"Descuento: {cliente.descuento}%, Puntos: {cliente.puntos}"
+        elif isinstance(cliente, ClienteCorporativo):
+            detalles = f"Empresa: {cliente.empresa}, Descuento Corporativo: {cliente.descuento_corporativo}%"
+        else:
+            detalles = ""
+        table.append([cliente.nombre, cliente.apellido, cliente.email, cliente.telefono, detalles])
+    print(tabulate(table, headers, tablefmt="grid"))
 
 
 def agregar_producto(productos):
@@ -101,8 +115,9 @@ def agregar_producto(productos):
 
 
 def mostrar_productos(productos):
-    for producto in productos:
-        print(producto)
+    headers = ["Nombre", "Precio"]
+    table = [[producto.nombre, f"${producto.precio:.2f}"] for producto in productos]
+    print(tabulate(table, headers, tablefmt="grid"))
 
 
 def registrar_compra(clientes, productos):
@@ -121,9 +136,10 @@ def mostrar_compras(clientes):
     email_cliente = input("Email del Cliente: ")
     cliente = next((c for c in clientes if c.email == email_cliente), None)
     if cliente:
+        headers = ["Nombre del Producto", "Precio"]
+        table = [[compra.nombre, f"${compra.precio:.2f}"] for compra in cliente.compras]
         print(f"Compras de {cliente.nombre}:")
-        for compra in cliente.compras:
-            print(compra)
+        print(tabulate(table, headers, tablefmt="grid"))
     else:
         print("Cliente no encontrado.")
 
@@ -133,13 +149,10 @@ def main():
     productos = []
 
     while True:
-        print("\n1. Agregar Cliente")
-        print("2. Mostrar Clientes")
-        print("3. Agregar Producto")
-        print("4. Mostrar Productos")
-        print("5. Registrar Compra")
-        print("6. Mostrar Compras de Cliente")
-        print("7. Salir")
+        print("\nMenú Principal")
+        print(tabulate(
+            [["1. Agregar Cliente"], ["2. Mostrar Clientes"], ["3. Agregar Producto"], ["4. Mostrar Productos"],
+             ["5. Registrar Compra"], ["6. Mostrar Compras de Cliente"], ["7. Salir"]], tablefmt="grid"))
 
         opcion = input("\nSeleccione una opción: ")
 
