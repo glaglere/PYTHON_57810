@@ -1,16 +1,18 @@
-# This is a sample Python script.
+class Cliente:
+    def __init__(self, nombre, apellido, email, telefono):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.telefono = telefono
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+    def __str__(self):
+        return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    cliente1 = Cliente("Ginette", "Laglere","glaglere@gmail.com","099-123456")
+    print(cliente1)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
