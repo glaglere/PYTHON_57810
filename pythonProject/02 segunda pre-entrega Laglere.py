@@ -60,71 +60,102 @@ def obtener_datos_comunes():
     return nombre, apellido, email, telefono
 
 
+def agregar_cliente(clientes):
+    print("\n1. Cliente Regular")
+    print("2. Cliente VIP")
+    print("3. Cliente Corporativo")
+    tipo_cliente = input("Seleccione el tipo de cliente: ")
+
+    nombre, apellido, email, telefono = obtener_datos_comunes()
+
+    if tipo_cliente == '1':
+        frecuencia_compra = input("Frecuencia de Compra (veces por mes): ")
+        cliente = ClienteRegular(nombre, apellido, email, telefono, frecuencia_compra)
+    elif tipo_cliente == '2':
+        descuento = input("Descuento (%): ")
+        puntos = input("Puntos: ")
+        cliente = ClienteVIP(nombre, apellido, email, telefono, descuento, puntos)
+    elif tipo_cliente == '3':
+        empresa = input("Empresa: ")
+        descuento_corporativo = input("Descuento Corporativo (%): ")
+        cliente = ClienteCorporativo(nombre, apellido, email, telefono, empresa, descuento_corporativo)
+    else:
+        print("Tipo de cliente no válido.")
+        return
+
+    clientes.append(cliente)
+    print("Cliente agregado exitosamente.")
+
+
+def mostrar_clientes(clientes):
+    for cliente in clientes:
+        print(cliente)
+
+
+def agregar_producto(productos):
+    nombre_producto = input("Nombre del Producto: ")
+    precio_producto = float(input("Precio del Producto: "))
+    producto = Producto(nombre_producto, precio_producto)
+    productos.append(producto)
+    print("Producto agregado exitosamente.")
+
+
+def mostrar_productos(productos):
+    for producto in productos:
+        print(producto)
+
+
+def registrar_compra(clientes, productos):
+    email_cliente = input("Email del Cliente: ")
+    nombre_producto = input("Nombre del Producto: ")
+    cliente = next((c for c in clientes if c.email == email_cliente), None)
+    producto = next((p for p in productos if p.nombre == nombre_producto), None)
+    if cliente and producto:
+        cliente.registrar_compra(producto)
+        print(f"Compra registrada: {cliente.nombre} ha comprado {producto.nombre}")
+    else:
+        print("Cliente o producto no encontrado.")
+
+
+def mostrar_compras(clientes):
+    email_cliente = input("Email del Cliente: ")
+    cliente = next((c for c in clientes if c.email == email_cliente), None)
+    if cliente:
+        print(f"Compras de {cliente.nombre}:")
+        for compra in cliente.compras:
+            print(compra)
+    else:
+        print("Cliente no encontrado.")
+
+
 def main():
     clientes = []
     productos = []
 
     while True:
-        print("\n1. Agregar Cliente Regular")
-        print("2. Agregar Cliente VIP")
-        print("3. Agregar Cliente Corporativo")
-        print("4. Mostrar Clientes")
-        print("5. Agregar Producto")
-        print("6. Mostrar Productos")
-        print("7. Registrar Compra")
-        print("8. Mostrar Compras de Cliente")
-        print("9. Salir")
+        print("\n1. Agregar Cliente")
+        print("2. Mostrar Clientes")
+        print("3. Agregar Producto")
+        print("4. Mostrar Productos")
+        print("5. Registrar Compra")
+        print("6. Mostrar Compras de Cliente")
+        print("7. Salir")
 
         opcion = input("\nSeleccione una opción: ")
 
         if opcion == '1':
-            nombre, apellido, email, telefono = obtener_datos_comunes()
-            frecuencia_compra = input("Frecuencia de Compra (veces por mes): ")
-            cliente = ClienteRegular(nombre, apellido, email, telefono, frecuencia_compra)
-            clientes.append(cliente)
+            agregar_cliente(clientes)
         elif opcion == '2':
-            nombre, apellido, email, telefono = obtener_datos_comunes()
-            descuento = input("Descuento (%): ")
-            puntos = input("Puntos: ")
-            cliente = ClienteVIP(nombre, apellido, email, telefono, descuento, puntos)
-            clientes.append(cliente)
+            mostrar_clientes(clientes)
         elif opcion == '3':
-            nombre, apellido, email, telefono = obtener_datos_comunes()
-            empresa = input("Empresa: ")
-            descuento_corporativo = input("Descuento Corporativo (%): ")
-            cliente = ClienteCorporativo(nombre, apellido, email, telefono, empresa, descuento_corporativo)
-            clientes.append(cliente)
+            agregar_producto(productos)
         elif opcion == '4':
-            for cliente in clientes:
-                print(cliente)
+            mostrar_productos(productos)
         elif opcion == '5':
-            nombre_producto = input("Nombre del Producto: ")
-            precio_producto = float(input("Precio del Producto: "))
-            producto = Producto(nombre_producto, precio_producto)
-            productos.append(producto)
+            registrar_compra(clientes, productos)
         elif opcion == '6':
-            for producto in productos:
-                print(producto)
+            mostrar_compras(clientes)
         elif opcion == '7':
-            email_cliente = input("Email del Cliente: ")
-            nombre_producto = input("Nombre del Producto: ")
-            cliente = next((c for c in clientes if c.email == email_cliente), None)
-            producto = next((p for p in productos if p.nombre == nombre_producto), None)
-            if cliente and producto:
-                cliente.registrar_compra(producto)
-                print(f"Compra registrada: {cliente.nombre} ha comprado {producto.nombre}")
-            else:
-                print("Cliente o producto no encontrado.")
-        elif opcion == '8':
-            email_cliente = input("Email del Cliente: ")
-            cliente = next((c for c in clientes if c.email == email_cliente), None)
-            if cliente:
-                print(f"Compras de {cliente.nombre}:")
-                for compra in cliente.compras:
-                    print(compra)
-            else:
-                print("Cliente no encontrado.")
-        elif opcion == '9':
             break
         else:
             print("Opción no válida, por favor intente nuevamente.")
