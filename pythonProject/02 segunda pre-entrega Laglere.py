@@ -8,6 +8,7 @@ class Cliente:
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
 
+
 class ClienteRegular(Cliente):
     def __init__(self, nombre, apellido, email, telefono, frecuencia_compra):
         super().__init__(nombre, apellido, email, telefono)
@@ -15,6 +16,7 @@ class ClienteRegular(Cliente):
 
     def __str__(self):
         return f"{super().__str__()}, Frecuencia de Compra: {self.frecuencia_compra} veces por mes"
+
 
 class ClienteVIP(Cliente):
     def __init__(self, nombre, apellido, email, telefono, descuento, puntos):
@@ -28,7 +30,7 @@ class ClienteVIP(Cliente):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    cliente1 = Cliente("Ginette", "Laglere","glaglere@gmail.com","099-123456")
+    cliente1 = Cliente("Ginette", "Laglere", "glaglere@gmail.com", "099-123456")
     print(cliente1)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
