@@ -8,11 +8,75 @@
         "tipo": "ClienteRegular"
     },
     {
-    "nombre": "Jorge",
+        "nombre": "Jorge",
         "apellido": "Sanchez",
         "email": "jorge.sanchez@gmail.com",
         "telefono": "099.123.123",
         "frecuencia_compra": "2",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Carlos",
+        "apellido": "Rodriguez",
+        "email": "carlos.rodriguez@gmail.com",
+        "telefono": "099.222.222",
+        "frecuencia_compra": "3",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Luis",
+        "apellido": "Martinez",
+        "email": "luis.martinez@gmail.com",
+        "telefono": "099.333.333",
+        "frecuencia_compra": "1",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Ana",
+        "apellido": "Lopez",
+        "email": "ana.lopez@gmail.com",
+        "telefono": "099.444.444",
+        "frecuencia_compra": "2",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Maria",
+        "apellido": "Gomez",
+        "email": "maria.gomez@gmail.com",
+        "telefono": "099.555.555",
+        "frecuencia_compra": "3",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Pedro",
+        "apellido": "Diaz",
+        "email": "pedro.diaz@gmail.com",
+        "telefono": "099.666.666",
+        "frecuencia_compra": "1",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Laura",
+        "apellido": "Fernandez",
+        "email": "laura.fernandez@gmail.com",
+        "telefono": "099.777.777",
+        "frecuencia_compra": "2",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Jose",
+        "apellido": "Ramirez",
+        "email": "jose.ramirez@gmail.com",
+        "telefono": "099.888.888",
+        "frecuencia_compra": "3",
+        "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Elena",
+        "apellido": "Torres",
+        "email": "elena.torres@gmail.com",
+        "telefono": "099.999.999",
+        "frecuencia_compra": "1",
         "tipo": "ClienteRegular"
     }
 ]
