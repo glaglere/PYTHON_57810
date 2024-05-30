@@ -28,7 +28,15 @@
         "apellido": "Lopez",
         "email": "pedro.lopez@gmail.com",
         "telefono": "099.222.222",
-        "compras": [],
+        "compras": [
+            {
+                "producto": {
+                    "nombre": "Auriculares",
+                    "precio": 150.0
+                },
+                "fecha": "2024-05-30 12:10:43"
+            }
+        ],
         "frecuencia_compra": "3",
         "tipo": "ClienteRegular"
     }
