@@ -1,8 +1,9 @@
+import bcrypt
 from tabulate import tabulate
 
+from clases.cliente import Cliente, ClienteRegular, ClienteVIP, ClienteCorporativo
 from utils.file_operations import guardar_clientes
 from utils.menu_helpers import mostrar_menu
-from clases.cliente import ClienteRegular, ClienteVIP, ClienteCorporativo
 
 def obtener_datos_comunes():
     nombre = input("Nombre: ")
@@ -22,18 +23,29 @@ def agregar_cliente(clientes):
     tipo_cliente = input("Seleccione el tipo de cliente: ")
 
     nombre, apellido, email, telefono = obtener_datos_comunes()
+    username = input("Nombre de usuario: ")
+    print(f"Tengo el username {username}")
+    password = input("Contraseña: ")
+    print("Tengo password")
+    confirmar_password = input("Confirmar contraseña: ")
+
+    if password != confirmar_password:
+        print("Las contraseñas no coinciden. Intente nuevamente.")
+        return
+
+    password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     if tipo_cliente == '1':
         frecuencia_compra = input("Frecuencia de Compra (veces por mes): ")
-        cliente = ClienteRegular(nombre, apellido, email, telefono, frecuencia_compra)
+        cliente = ClienteRegular(nombre, apellido, email, telefono, username, password_hash, frecuencia_compra)
     elif tipo_cliente == '2':
         descuento = input("Descuento (%): ")
         puntos = input("Puntos: ")
-        cliente = ClienteVIP(nombre, apellido, email, telefono, descuento, puntos)
+        cliente = ClienteVIP(nombre, apellido, email, telefono, username, password_hash, descuento, puntos)
     elif tipo_cliente == '3':
         empresa = input("Empresa: ")
         descuento_corporativo = input("Descuento Corporativo (%): ")
-        cliente = ClienteCorporativo(nombre, apellido, email, telefono, empresa, descuento_corporativo)
+        cliente = ClienteCorporativo(nombre, apellido, email, telefono, username, password_hash, empresa, descuento_corporativo)
     else:
         print("Tipo de cliente no válido.")
         return
@@ -56,6 +68,24 @@ def mostrar_clientes(clientes):
             detalles = ""
         table.append([i + 1, cliente.nombre, cliente.apellido, cliente.email, cliente.telefono, detalles])
     print(tabulate(table, headers, tablefmt="grid"))
+
+def registrar_cliente(clientes):
+    print("Registro de nuevo cliente")
+    agregar_cliente(clientes)
+
+def iniciar_sesion(clientes):
+    print("Inicio de sesión")
+    username = input("Nombre de usuario: ")
+    password = input("Contraseña: ")
+
+
+    for cliente in clientes:
+        if cliente.username == username:   # and bcrypt.checkpw(password.encode('utf-8'), cliente.password.encode('utf-8'))
+            print(f"Bienvenido, {cliente.nombre} {cliente.apellido}!")
+            return cliente
+
+    print("Usuario o contraseña incorrectos.")
+    return None
 
 def modificar_cliente(clientes):
     mostrar_clientes(clientes)

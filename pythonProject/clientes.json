@@ -1,91 +1,12 @@
 [
     {
-        "nombre": "Juan",
-        "apellido": "Perez",
-        "email": "juan.perez@gmail.com",
-        "telefono": "099.111.111",
-        "frecuencia_compra": "1",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Jorge",
-        "apellido": "Sanchez",
-        "email": "jorge.sanchez@gmail.com",
-        "telefono": "099.123.123",
-        "frecuencia_compra": "2",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Carlos",
-        "apellido": "Rodriguez",
-        "email": "carlos.rodriguez@gmail.com",
-        "telefono": "099.222.222",
-        "frecuencia_compra": "3",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Luis",
-        "apellido": "Martinez",
-        "email": "luis.martinez@gmail.com",
-        "telefono": "099.333.333",
-        "frecuencia_compra": "1",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Ana",
-        "apellido": "Lopez",
-        "email": "ana.lopez@gmail.com",
-        "telefono": "099.444.444",
-        "frecuencia_compra": "2",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Maria",
-        "apellido": "Gomez",
-        "email": "maria.gomez@gmail.com",
-        "telefono": "099.555.555",
-        "frecuencia_compra": "3",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Pedro",
-        "apellido": "Diaz",
-        "email": "pedro.diaz@gmail.com",
-        "telefono": "099.666.666",
-        "frecuencia_compra": "1",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Laura",
-        "apellido": "Fernandez",
-        "email": "laura.fernandez@gmail.com",
-        "telefono": "099.777.777",
-        "frecuencia_compra": "2",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Jose",
-        "apellido": "Ramirez",
-        "email": "jose.ramirez@gmail.com",
-        "telefono": "099.888.888",
-        "frecuencia_compra": "3",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Elena",
-        "apellido": "Torres",
-        "email": "elena.torres@gmail.com",
-        "telefono": "099.999.999",
-        "frecuencia_compra": "1",
-        "tipo": "ClienteRegular"
-    },
-    {
-        "nombre": "Ginette Vip",
+        "nombre": "Ginette",
         "apellido": "Laglere",
-        "email": "gl",
-        "telefono": "123123123",
-        "descuento": "12",
-        "puntos": "123",
-        "tipo": "ClienteVIP"
+        "email": "glaglere",
+        "telefono": "099",
+        "username": "glaglere",
+        "password": "$2b$12$I4n0654c19V8QK194VMSieLydhH/2ekFgspDpqYLunsJsdQlCWfam",
+        "tipo": "ClienteRegular",
+        "frecuencia_compra": "2"
     }
 ]

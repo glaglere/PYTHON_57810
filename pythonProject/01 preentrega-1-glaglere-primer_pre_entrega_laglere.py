@@ -13,7 +13,7 @@ Original file is located at
 
 import bcrypt
 from tabulate import tabulate
-import getpass
+
 
 # Diccionario para almacenar usuarios
 user_db = {}
@@ -82,7 +82,7 @@ def display_menu():
 # Retorna: 0(tuple) - Una tupla con el nombre de usuario (str) y la contraseña (str)
 def get_user_credentials():
     username = input("Ingrese nombre de usuario: ")
-    password = getpass.getpass("Ingrese contraseña: ")
+    password = input("Ingrese contraseña: ")
     return username, password
 
 # Lógica principal
