@@ -78,5 +78,14 @@
         "telefono": "099.999.999",
         "frecuencia_compra": "1",
         "tipo": "ClienteRegular"
+    },
+    {
+        "nombre": "Ginette Vip",
+        "apellido": "Laglere",
+        "email": "gl",
+        "telefono": "123123123",
+        "descuento": "12",
+        "puntos": "123",
+        "tipo": "ClienteVIP"
     }
 ]
