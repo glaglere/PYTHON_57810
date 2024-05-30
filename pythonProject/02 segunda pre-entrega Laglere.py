@@ -28,6 +28,16 @@ class ClienteVIP(Cliente):
         return f"{super().__str__()}, Descuento: {self.descuento}%, Puntos: {self.puntos}"
 
 
+class ClienteCorporativo(Cliente):
+    def __init__(self, nombre, apellido, email, telefono, empresa, descuento_corporativo):
+        super().__init__(nombre, apellido, email, telefono)
+        self.empresa = empresa
+        self.descuento_corporativo = descuento_corporativo
+
+    def __str__(self):
+        return f"{super().__str__()}, Empresa: {self.empresa}, Descuento Corporativo: {self.descuento_corporativo}%"
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     cliente1 = Cliente("Ginette", "Laglere", "glaglere@gmail.com", "099-123456")
