@@ -8,6 +8,13 @@ class Cliente:
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
 
+class ClienteRegular(Cliente):
+    def __init__(self, nombre, apellido, email, telefono, frecuencia_compra):
+        super().__init__(nombre, apellido, email, telefono)
+        self.frecuencia_compra = frecuencia_compra
+
+    def __str__(self):
+        return f"{super().__str__()}, Frecuencia de Compra: {self.frecuencia_compra} veces por mes"
 
 
 # Press the green button in the gutter to run the script.
