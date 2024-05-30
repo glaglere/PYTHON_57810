@@ -16,6 +16,15 @@ class ClienteRegular(Cliente):
     def __str__(self):
         return f"{super().__str__()}, Frecuencia de Compra: {self.frecuencia_compra} veces por mes"
 
+class ClienteVIP(Cliente):
+    def __init__(self, nombre, apellido, email, telefono, descuento, puntos):
+        super().__init__(nombre, apellido, email, telefono)
+        self.descuento = descuento
+        self.puntos = puntos
+
+    def __str__(self):
+        return f"{super().__str__()}, Descuento: {self.descuento}%, Puntos: {self.puntos}"
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
