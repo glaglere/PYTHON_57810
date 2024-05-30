@@ -1,0 +1,42 @@
+[
+    {
+        "nombre": "Televisor",
+        "precio": 1000.0
+    },
+    {
+        "nombre": "Laptop",
+        "precio": 850.0
+    },
+    {
+        "nombre": "Smartphone",
+        "precio": 600.0
+    },
+    {
+        "nombre": "Tablet",
+        "precio": 300.0
+    },
+    {
+        "nombre": "Auriculares",
+        "precio": 150.0
+    },
+    {
+        "nombre": "Cámara",
+        "precio": 450.0
+    },
+    {
+        "nombre": "Impresora",
+        "precio": 200.0
+    },
+    {
+        "nombre": "Monitor",
+        "precio": 250.0
+    },
+    {
+        "nombre": "Teclado",
+        "precio": 50.0
+    },
+    {
+        "nombre": "Ratón",
+        "precio": 30.0
+    }
+]

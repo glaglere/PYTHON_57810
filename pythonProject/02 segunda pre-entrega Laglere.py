@@ -1,3 +1,4 @@
+import json
 from tabulate import tabulate
 from datetime import datetime
 
@@ -7,6 +8,13 @@ class Producto:
         self.nombre = nombre
         self.precio = precio
 
+    def to_dict(self):
+        return {"nombre": self.nombre, "precio": self.precio}
+
+    @staticmethod
+    def from_dict(data):
+        return Producto(data["nombre"], data["precio"])
+
     def __str__(self):
         return f"Producto: {self.nombre}, Precio: ${self.precio:.2f}"
 
@@ -15,6 +23,14 @@ class Compra:
     def __init__(self, producto, fecha):
         self.producto = producto
         self.fecha = fecha
+
+    def to_dict(self):
+        return {"producto": self.producto.to_dict(), "fecha": self.fecha}
+
+    @staticmethod
+    def from_dict(data):
+        producto = Producto.from_dict(data["producto"])
+        return Compra(producto, data["fecha"])
 
     def __str__(self):
         return f"{self.producto.nombre} - ${self.producto.precio:.2f} (Fecha: {self.fecha})"
@@ -33,6 +49,21 @@ class Cliente:
         compra = Compra(producto, fecha)
         self.compras.append(compra)
 
+    def to_dict(self):
+        return {
+            "nombre": self.nombre,
+            "apellido": self.apellido,
+            "email": self.email,
+            "telefono": self.telefono,
+            "compras": [compra.to_dict() for compra in self.compras]
+        }
+
+    @staticmethod
+    def from_dict(data):
+        cliente = Cliente(data["nombre"], data["apellido"], data["email"], data["telefono"])
+        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
+        return cliente
+
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellido}, Email: {self.email}, Teléfono: {self.telefono}"
 
@@ -41,6 +72,19 @@ class ClienteRegular(Cliente):
     def __init__(self, nombre, apellido, email, telefono, frecuencia_compra):
         super().__init__(nombre, apellido, email, telefono)
         self.frecuencia_compra = frecuencia_compra
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["frecuencia_compra"] = self.frecuencia_compra
+        data["tipo"] = "ClienteRegular"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        cliente = ClienteRegular(data["nombre"], data["apellido"], data["email"], data["telefono"],
+                                 data["frecuencia_compra"])
+        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
+        return cliente
 
     def __str__(self):
         return f"{super().__str__()}, Frecuencia de Compra: {self.frecuencia_compra} veces por mes"
@@ -52,6 +96,20 @@ class ClienteVIP(Cliente):
         self.descuento = descuento
         self.puntos = puntos
 
+    def to_dict(self):
+        data = super().to_dict()
+        data["descuento"] = self.descuento
+        data["puntos"] = self.puntos
+        data["tipo"] = "ClienteVIP"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        cliente = ClienteVIP(data["nombre"], data["apellido"], data["email"], data["telefono"], data["descuento"],
+                             data["puntos"])
+        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
+        return cliente
+
     def __str__(self):
         return f"{super().__str__()}, Descuento: {self.descuento}%, Puntos: {self.puntos}"
 
@@ -61,6 +119,20 @@ class ClienteCorporativo(Cliente):
         super().__init__(nombre, apellido, email, telefono)
         self.empresa = empresa
         self.descuento_corporativo = descuento_corporativo
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["empresa"] = self.empresa
+        data["descuento_corporativo"] = self.descuento_corporativo
+        data["tipo"] = "ClienteCorporativo"
+        return data
+
+    @staticmethod
+    def from_dict(data):
+        cliente = ClienteCorporativo(data["nombre"], data["apellido"], data["email"], data["telefono"], data["empresa"],
+                                     data["descuento_corporativo"])
+        cliente.compras = [Compra.from_dict(compra) for compra in data["compras"]]
+        return cliente
 
     def __str__(self):
         return f"{super().__str__()}, Empresa: {self.empresa}, Descuento Corporativo: {self.descuento_corporativo}%"
@@ -104,6 +176,7 @@ def agregar_cliente(clientes):
 
     clientes.append(cliente)
     print("Cliente agregado exitosamente.")
+    guardar_clientes(clientes)
 
 
 def mostrar_clientes(clientes):
@@ -128,6 +201,7 @@ def agregar_producto(productos):
     producto = Producto(nombre_producto, precio_producto)
     productos.append(producto)
     print("Producto agregado exitosamente.")
+    guardar_productos(productos)
 
 
 def mostrar_productos(productos):
@@ -159,6 +233,7 @@ def registrar_compra(clientes, productos):
     if producto:
         cliente.registrar_compra(producto)
         print(f"Compra registrada: {cliente.nombre} ha comprado {producto.nombre}")
+        guardar_clientes(clientes)
     else:
         print("Producto no encontrado.")
 
@@ -188,9 +263,45 @@ def mostrar_menu(menu):
     print(tabulate(table, headers, tablefmt="grid"))
 
 
+def guardar_clientes(clientes):
+    with open('clientes.json', 'w') as file:
+        json.dump([cliente.to_dict() for cliente in clientes], file, indent=4)
+
+
+def cargar_clientes():
+    try:
+        with open('clientes.json', 'r') as file:
+            clientes_data = json.load(file)
+            clientes = []
+            for data in clientes_data:
+                if data["tipo"] == "ClienteRegular":
+                    clientes.append(ClienteRegular.from_dict(data))
+                elif data["tipo"] == "ClienteVIP":
+                    clientes.append(ClienteVIP.from_dict(data))
+                elif data["tipo"] == "ClienteCorporativo":
+                    clientes.append(ClienteCorporativo.from_dict(data))
+            return clientes
+    except FileNotFoundError:
+        return []
+
+
+def guardar_productos(productos):
+    with open('productos.json', 'w') as file:
+        json.dump([producto.to_dict() for producto in productos], file, indent=4)
+
+
+def cargar_productos():
+    try:
+        with open('productos.json', 'r') as file:
+            productos_data = json.load(file)
+            return [Producto.from_dict(data) for data in productos_data]
+    except FileNotFoundError:
+        return []
+
+
 def main():
-    clientes = []
-    productos = []
+    clientes = cargar_clientes()
+    productos = cargar_productos()
 
     menu = {
         "1": "Agregar Cliente",
