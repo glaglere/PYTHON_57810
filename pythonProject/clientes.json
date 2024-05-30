@@ -4,7 +4,22 @@
         "apellido": "Perez",
         "email": "juan.perez@gmail.com",
         "telefono": "099.111.111",
-        "compras": [],
+        "compras": [
+            {
+                "producto": {
+                    "nombre": "Televisor",
+                    "precio": 1000.0
+                },
+                "fecha": "2024-05-30 12:00:50"
+            },
+            {
+                "producto": {
+                    "nombre": "Monitor",
+                    "precio": 2000.0
+                },
+                "fecha": "2024-05-30 12:00:50"
+            }
+        ],
         "frecuencia_compra": "2",
         "tipo": "ClienteRegular"
     },
