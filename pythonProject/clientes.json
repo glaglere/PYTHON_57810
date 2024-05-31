@@ -5,18 +5,40 @@
         "email": "glaglere",
         "telefono": "099",
         "username": "glaglere",
-        "password": "$2b$12$90guYRUFRKu8WzCuNt/wI./iz27MVO.BZhbQDkyy2RLgti0xGocvO",
+        "password": "$2b$12$.Eo64E/xprKMCb7RpcpDq..ClzRYwyz2K9AyjJBZszgCsrey8d.ly",
         "tipo": "ClienteRegular",
         "frecuencia_compra": "2"
     },
     {
-        "nombre": "Ginette",
-        "apellido": "Laglere",
-        "email": "glaglere",
+        "nombre": "Elena",
+        "apellido": "Xenidis",
+        "email": "Elena.Xenidis",
         "telefono": "099",
-        "username": "glaglere",
-        "password": "$2b$12$uoXQrsBVyst02H.GyB4QzesL6IYB8RIuA5AgeLm5J6mMGN4X3kyUi",
+        "username": "Elena.Xenidis",
+        "password": "$2b$12$SyYZJOXeJDNKn39CnLtgZuW/WfOjrFVtp8jBLTxwKxrNWFfNPLgTu",
         "tipo": "ClienteRegular",
         "frecuencia_compra": "2"
+    },
+    {
+        "nombre": "Miguel",
+        "apellido": "Sanchez",
+        "email": "msanchez@gmail.com",
+        "telefono": "99123123123",
+        "username": "msanchez",
+        "password": "$2b$12$K3yDeUgynZ1Uf.qnbWHgpeFgNNf2rmPhYYXRduIM7.jFZPK4GLk2.",
+        "tipo": "ClienteVIP",
+        "descuento": "75",
+        "puntos": "1500"
+    },
+    {
+        "nombre": "Lucas",
+        "apellido": "Sanchez",
+        "email": "lucas.sanchez",
+        "telefono": "1235t6q123",
+        "username": "lucassanchez",
+        "password": "$2b$12$FajlW//cQA5UqbCO6AHIbeNzq4xljXeA9SMcOS0CTK.waWTEsJQCC",
+        "tipo": "ClienteCorporativo",
+        "empresa": "Marvel",
+        "descuento_corporativo": "45"
     }
 ]
