@@ -1,15 +1,14 @@
 import json
-from clases.cliente import ClienteRegular, ClienteVIP, ClienteCorporativo
-from clases.producto import Producto
-from clases.compra import Compra
 
-
-import json
 from clases.cliente import ClienteRegular, ClienteVIP, ClienteCorporativo, Cliente
+from clases.compra import Compra
+from clases.producto import Producto
+
 
 def guardar_clientes(clientes):
     with open('clientes.json', 'w', encoding='utf-8') as file:
         json.dump([cliente.to_dict() for cliente in clientes], file, indent=4, ensure_ascii=False)
+
 
 def cargar_clientes():
     try:

@@ -1,25 +1,40 @@
 from clases.producto import Producto
-from utils.file_operations import guardar_productos
-from utils.menu_helpers import mostrar_menu
+from utils.file_operations import guardar_productos, cargar_productos
 from tabulate import tabulate
 
 
 def agregar_producto(productos):
-    nombre_producto = input("Nombre del Producto: ")
+    nombre = input("Nombre del producto: ")
+    # Check if the product already exists
+    for producto in productos:
+        if producto.nombre == nombre:
+            print("El producto ya existe. Por favor, elija otro nombre.")
+            return
     try:
         precio_producto = float(input("Precio del Producto: "))
     except ValueError:
         print("Precio inválido. Intente nuevamente.")
         return
-    producto = Producto(nombre_producto, precio_producto)
+
+    descripcion = input("Descripción del producto: ")
+
+    try:
+        cantidad = int(input("Cantidad disponible: "))
+    except ValueError:
+        print("Cantidad inválida. Intente nuevamente.")
+        return
+
+    producto = Producto(nombre, descripcion, precio_producto, cantidad)
     productos.append(producto)
     print("Producto agregado exitosamente.")
     guardar_productos(productos)
 
 
 def mostrar_productos(productos):
-    headers = ["#", "Nombre", "Precio"]
-    table = [[i + 1, producto.nombre, f"${producto.precio:.2f}"] for i, producto in enumerate(productos)]
+    headers = ["#", "Nombre", "Descripción", "Precio", "Cantidad"]
+    table = []
+    for i, producto in enumerate(productos):
+        table.append([i + 1, producto.nombre, producto.descripcion, producto.precio, producto.cantidad])
     print(tabulate(table, headers, tablefmt="grid"))
 
 
@@ -33,15 +48,15 @@ def modificar_producto(productos):
         print("Índice de producto no válido.")
         return
     producto = productos[indice_producto]
-    print(f"Modificando producto: {producto}")
-    nombre_producto = input("Nuevo nombre del producto: ")
+    print(f"Modificando producto: {producto.nombre}")
+    producto.nombre = input("Nombre del producto: ")
+    producto.descripcion = input("Descripción del producto: ")
     try:
-        precio_producto = float(input("Nuevo precio del producto: "))
+        producto.precio = float(input("Precio del producto: "))
+        producto.cantidad = int(input("Cantidad disponible: "))
     except ValueError:
-        print("Precio inválido. Intente nuevamente.")
+        print("Precio o  Cantidad no válido.")
         return
-    producto.nombre = nombre_producto
-    producto.precio = precio_producto
     guardar_productos(productos)
     print("Producto modificado exitosamente.")
 

@@ -95,7 +95,7 @@ def iniciar_sesion(clientes):
     print("Inicio de sesión")
     username = input("Nombre de usuario: ")
     # password = stdiomask.getpass(prompt="Contraseña: ")
-    password = input(prompt="Contraseña: ")
+    password = input("Contraseña: ")
 
     for cliente in clientes:
         if cliente.username == username and bcrypt.checkpw(password.encode('utf-8'), cliente.password.encode('utf-8')):
